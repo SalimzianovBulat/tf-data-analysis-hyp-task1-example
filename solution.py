@@ -8,7 +8,10 @@ def solution(x_success: int,
              x_cnt: int, 
              y_success: int, 
              y_cnt: int) -> bool:
-    # Измените код этой функции
-    # Это будет вашим решением
-    # Не меняйте название функции и её аргументы
-    return ... # Ваш ответ, True или False
+    import scipy.stats as sps
+    alpha = 0.03
+
+    first = np.concatenate((np.ones(x_success), np.zeros(x_cnt - x_success)))
+
+    second = np.concatenate((np.ones(y_success), np.zeros(y_cnt - y_success)))
+    return sps.ttest_ind(first, second)[1] <= alpha
