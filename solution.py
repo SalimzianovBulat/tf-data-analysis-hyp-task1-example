@@ -10,8 +10,7 @@ def solution(x_success: int,
              y_cnt: int) -> bool:
     import scipy.stats as sps
     alpha = 0.03
-
-    first = np.concatenate((np.ones(x_success), np.zeros(x_cnt - x_success)))
-
-    second = np.concatenate((np.ones(y_success), np.zeros(y_cnt - y_success)))
-    return sps.ttest_ind(first, second)[1] <= alpha
+    x_mean, y_mean = x_success / x_cnt, y_success / y_cnt
+    x_variance, y_variance = x_mean * (1 - x_mean) / x_cnt, y_mean * (1 - y_mean) / y_cnt
+    z = sps.norm.ppf(1-alpha)
+    return y_mean - x_mean > np.sqrt(x_variance + y_variance) * z
